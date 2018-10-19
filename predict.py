@@ -6,7 +6,7 @@ from train import prepare_data
 
 if __name__ == "__main__":
     number_of_generated_names = 10
-    minimal_generated_name_length = 6
+    minimal_generated_name_length = 10
     model = torch.load('trained_models/char-rnn-generation.pt')
     model.eval()
     char_to_ix, ix_to_char = pickle.load(open('trained_models/dicts.pickle', 'rb'))
@@ -37,6 +37,6 @@ if __name__ == "__main__":
 
         word = word.replace('<SOS>', '')
         word = word.replace('<EOS>', '')
-        if len(word) >= 6 and word not in names and word not in generated_names:
+        if len(word) >= minimal_generated_name_length and word not in names and word not in generated_names:
             print(word)
             generated_names.append(word)
