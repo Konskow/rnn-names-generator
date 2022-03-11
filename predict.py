@@ -6,12 +6,14 @@ from train import prepare_data
 
 if __name__ == "__main__":
     number_of_generated_names = 10
-    minimal_generated_name_length = 8
-    model = torch.load('trained_models/char-rnn-generation.pt')
-    model.eval()
-    char_to_ix, ix_to_char = pickle.load(open('trained_models/dicts.pickle', 'rb'))
+    minimal_generated_name_length = 6
+    model = torch.load('trained_models/english/cat_names/model.pt')
+    model.load_state_dict(torch.load('trained_models/english/cat_names/model_dicts.pt'))
+    char_to_ix, ix_to_char = pickle.load(open('trained_models/english/cat_names/dicts.pickle', 'rb'))
 
-    names = prepare_data('data/polish/forenames.txt')
+    model.eval()
+
+    names = prepare_data('data/english/cat_names.txt')
     generated_names = []
 
     while len(generated_names) < number_of_generated_names:
